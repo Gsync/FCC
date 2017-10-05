@@ -15,20 +15,20 @@
 // Remainder
 
 function sumFibs(num) {
-    var arr = [1];
-    for (var i=1; i<=num;) {
-        arr.push(i);
-        i = arr[arr.length - 1] + arr[arr.length - 2];
-    }
-    var sum = arr.reduce(function(a, b) {
-        if (b%2 !== 0) {
-            return a+b;  
-        } else {
-            return a;
+        var arr = [1];
+        for (var i=1; i<=num;) {
+            arr.push(i);
+            i = arr[arr.length - 1] + arr[arr.length - 2];
         }
-    });
-    return console.log(sum);
-  }
+        var sum = arr.reduce(function(a, b) {
+            if (b%2 !== 0) {
+                return a+b;  
+            } else {
+                return a;
+            }
+        });
+        return console.log(sum);
+    }
   
 sumFibs(4);
 
