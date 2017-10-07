@@ -26,15 +26,15 @@ function smallestCommons(arr) {
     }
     var q = 0;
     var l = 1;
-  
+    var n;
+    
     do {
       q = arr2[0] * l * arr2[1];
-      for (var n = 2; n < arr2.length; n++) {
+      for (n = 2; n < arr2.length; n++) {
         if (q % arr2[n] !== 0) {
           break;
         }
       }
-  
       l++;
     } while (n !== arr2.length);
   
