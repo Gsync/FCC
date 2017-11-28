@@ -1,4 +1,3 @@
-//const [w, h, padding, bPadding] = [800, 600, 50, 1];
 const margin = { top: 20, right: 100, bottom: 20, left: 100 };
 const w = 1000 - margin.left - margin.right;
 const h = 600 - margin.top - margin.bottom;
@@ -18,7 +17,7 @@ d3.json(dataUrl, function(data) {
                     .range([0, w]);
 
     let yScale = d3.scaleLinear()
-                    .domain([0, Math.floor(d3.max(data2, d=>d[1]))])
+                    .domain([0, d3.max(data2, d=>d[1])])
                     .range([h, 0]);
 
     let yAxis = d3.axisLeft(yScale);
@@ -39,7 +38,22 @@ d3.json(dataUrl, function(data) {
         .attr('x', d => xScale(new Date(d[0])))
         .attr('width', w/data2.length)
         .attr('height', d => h - yScale(d[1]))
-        .style('fill', 'steelblue');
+        .style('fill', 'steelblue')
+        .on('mouseover', function (d) {
+            d3.select(this).style('opacity', 0.5)
+            let tooltip = d3.select('#tooltip');
+            tooltip.style('left', d3.event.pageX + 'px');
+            tooltip.style('top', d3.event.pageY + 'px');
+            tooltip.html(
+                '<div>' + d[1] + 'B' + '</div>'
+                + '<div>' + d[0] + '</div>'
+            );
+            tooltip.classed('hidden', false);
+        })
+        .on('mouseout', function (d) {
+            d3.select(this).style('opacity', 1)
+            d3.select('#tooltip').classed('hidden', true);
+        });
     
     //y-axis title
     svg
