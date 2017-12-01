@@ -38,7 +38,25 @@ d3.json(url, function(error, data) {
                 .attr('cy', d=>yScale(d.Place))
                 .attr('fill', d => d.Doping ? 'red' : 'blue')
                 .attr('r', 5)
-                .attr('stroke', '#fff');
+                .attr('stroke', '#fff')
+                .on('mouseover', function (d) {
+                    d3.select(this).style('opacity', 0.5)
+                    let tooltip = d3.select('#tooltip');
+                    tooltip.style('left', d3.event.pageX + 'px');
+                    tooltip.style('top', d3.event.pageY + 'px');
+                    tooltip.html(
+                        '<div>' + 'Name: ' + d.Name + '</div>'
+                        + '<div>' + 'Rank: ' + d.Place + '</div>'
+                        + '<div>' + 'Time: ' + d.Time + ' minutes' + '</div>'
+                        + '<div>' + 'Country: ' + d.Nationality + ' minutes' + '</div>'
+                        + '<div>' + 'Year: ' + d.Year + ' minutes' + '</div>'
+                    );
+                    tooltip.classed('hidden', false);
+                })
+                .on('mouseout', function (d) {
+                    d3.select(this).style('opacity', 1)
+                    d3.select('#tooltip').classed('hidden', true);
+                });
 
         svg.append('text')
             .attr('x', w/2)
